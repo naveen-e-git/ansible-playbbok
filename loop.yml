@@ -1,0 +1,16 @@
+---
+
+- hosts: ubuntu
+  become: yes
+  tasks:
+  
+    - name: install packages in a loop 
+      apt:
+        name: "{{item}}"
+        state: present
+      with_items:
+          - python
+          - wget
+          - unzip
+          - tree 
+    

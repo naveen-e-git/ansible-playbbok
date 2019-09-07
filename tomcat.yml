@@ -1,0 +1,28 @@
+---
+
+- hosts: ubuntu
+  become: yes
+  vars:
+    turl: http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.45/bin/apache-tomcat-8.5.45.tar.gz
+  tasks:
+
+    - name: download tomcat 8
+      get_url:
+        url: "{{turl}}"
+        dest: /home/ansadm
+      register: tdownlod
+
+    - name: print tdownload
+      debug:
+        msg: "{{tdownlod}}"
+
+    - name: extract tomcat 8 tar file
+      unarchive:
+        src: "{{tdownlod.dest}}"
+        dest: /home/ansadm
+        remote_src: yes
+      register: extarct
+
+    - name: run startup script
+      shell: nohup /home/ansadm/apache-tomcat-8.5.45/bin/startup.sh &
+  

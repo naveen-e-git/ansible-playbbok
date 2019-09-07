@@ -1,0 +1,34 @@
+- hosts: centos
+  become: yes
+  tasks:
+    
+    - name: install apache2
+      yum:
+        name: httpd
+        state: present
+
+    - name: start apache2 
+      service:
+        name: httpd
+        state: started
+
+    - name: copy index.html file
+      copy:
+        src: index.html
+        dest: /var/www/html/
+
+    - name: create a file
+      file:
+        path: /home/ansadm/xzy
+        state: touch
+      register: output
+
+    - name: print output
+      debug: 
+        msg: "{{output}}" 
+
+    - name: creating a user
+      user:
+        name: prem
+        shell: /bin/sh
+        
