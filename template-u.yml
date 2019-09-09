@@ -1,0 +1,29 @@
+- hosts: ubuntu
+  become: yes
+  ignore_errors: yes
+  tasks:
+    
+    - name: create a file
+      file:
+        path: /home/ansadm/xzy1
+        state: directory
+      register: output
+
+    - name: start apache2 
+      service:
+        name: apache2
+        state: started
+
+    - name: copy index.html file
+      template:
+        src: template/index.j2
+        dest: /var/www/html/index.html
+      notify: restart httpd
+
+
+
+  handlers:
+    - name: restart httpd
+      service: 
+        name: httpd
+        state: restarted
