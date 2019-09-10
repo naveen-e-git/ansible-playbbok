@@ -21,6 +21,11 @@
         name: mysql
         state: started
 
+    - name: copy index.html file
+      template:
+        src: template/index.j2
+        dest: /var/www/html/index.html
+
     - name: creating accounts database
       mysql_db:
         name: accounts

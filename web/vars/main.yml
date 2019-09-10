@@ -1,0 +1,3 @@
+---
+# vars file for web
+  mysql: mysql-server
